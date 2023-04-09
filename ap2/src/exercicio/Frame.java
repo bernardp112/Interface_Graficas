@@ -12,21 +12,22 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import java.awt.event.ItemEvent;
 
-public class Frame_Grid extends JFrame implements ActionListener{
+public class Frame extends JFrame implements ActionListener{
 	
 	private JTextField txtNumero, txtMaior, txtMenor, txtMedia, txtValores;
 	private JLabel lblNumero, lblMaior, lblMenor, lblMedia, lblValores, lblResultado;
 	private JButton btnOk, btnExibir, btnCalcular;
+	private JComboBox<String> comboBox;
 	int i = 0;	    
     ArrayList<Double> vetor = new ArrayList<>();
 
-	public Frame_Grid() {
+	public Frame() {
 		
 		String[] labels = {"Somar", "Multiplicar"};
 
 		JFrame janela = new JFrame();
 		JPanel painel = new JPanel();
-		JComboBox comboBox = new JComboBox(labels);
+		comboBox = new JComboBox(labels);
 		
 		txtNumero = new JTextField(10);
 		txtMaior = new JTextField(10);
@@ -87,6 +88,7 @@ public class Frame_Grid extends JFrame implements ActionListener{
 		janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 }
+	
     public void actionPerformed(ActionEvent event) {
             		
 
@@ -133,33 +135,45 @@ public class Frame_Grid extends JFrame implements ActionListener{
     		ArrayList<Integer> total = new ArrayList<Integer>();
     		    
     		while(valores > 0) {
-    		     total.add(valores % 100);
+    		     
+    			 total.add(valores % 100);
     		     valores /= 100;
+    		
     		}
     		
-    		int total1 = total.get(0);
-            for (int i = 1; i < total.size(); i++) {
+    		if(comboBox.getSelectedItem().equals("Somar")) {
+    			
+    			int total1 = total.get(0);
+    			for (int i = 1; i < total.size(); i++) {
                 
-            	total1 = total1 + total.get(i);
+    				total1 = total1 + total.get(i);
             
-            }
+            	}
+    			
+    			lblResultado.setText(String.format("Soma = %d", total1));
+    		
+    		}
             
-            int total1 = total.get(0);
-            for (int i = 1; i < total.size(); i++) {
+    		else if(comboBox.getSelectedItem().equals("Multiplicar")) {
+    			
+    			int total2 = total.get(0);
+                for (int i = 1; i < total.size(); i++) {
+                    
+                	total2 = total2 * total.get(i);
                 
-            	total1 = total1 * total.get(i);
+                }
+                
+    			lblResultado.setText(String.format("Multiplicar = %d", total2));
+    			
+    		}
             
-            }
-            
-            lblResultado.setText(String.format("Soma = %d", total1));
+    	}   
     		
-    		}   
-    		
-    	}
+    }
 	
     public static void main(String args[]) {
         
-    	Frame_Grid janela = new Frame_Grid();
+    	Frame janela = new Frame();
     	janela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	
     }
